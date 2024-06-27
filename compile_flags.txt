@@ -1,0 +1,10 @@
+-I
+deps/glfw/include
+-I
+deps/glad/include
+-I
+deps/glm
+-I
+include
+-I
+examples
