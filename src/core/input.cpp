@@ -1,28 +1,49 @@
 #include "core/glfwHandler.hpp"
 #include "core/input.hpp"
 #include "events/inotify.hpp"
+#include "objects/cameraController.hpp"
 #include "GLFW/glfw3.h"
 
-namespace ProjectName{
+class Camera;
 
-void InputHandler::init(Program &program, GLFWHandler &hwnd, const char* vShaderSrc, const char* fShaderSrc)
+void InputHandler::init(Program &program, GLFWHandler &hwnd, const char* vShaderSrc, const char* fShaderSrc, Camera *camera)
 {
-  ctrl_R = new ReloadProgram(program, vShaderSrc, fShaderSrc, hwnd.aspectRatio); 
-  esc = new TerminateWindow(hwnd.getWindow());
+  reload = new ReloadProgram(program, vShaderSrc, fShaderSrc, hwnd.aspectRatio); 
+  terminate = new TerminateWindow(hwnd.getWindow());
+  panDown = new PanDown(camera);
+  panRight = new PanRight(camera);
+  panUp = new PanUp(camera);
+  panLeft = new PanLeft(camera);
 }
 
 
-void InputHandler::processInput(GLFWwindow *window, InotifyHandler &inotifyHwnd)
+void InputHandler::processInput(float dt, GLFWwindow *window, InotifyHandler &inotifyHwnd)
 {
   glfwPollEvents();
 
   if(inotifyHwnd.isTriggered())
   {
-    ctrl_R->execute();
+    reload->execute(dt);
   }
   else if((glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && Command::timer <= 0.0f))
   {
-    esc->execute(); 
+    terminate->execute(dt); 
   }
-}
+
+  if((glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS))
+  {
+    panDown->execute(dt); 
+  }
+  if((glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS))
+  {
+    panRight->execute(dt); 
+  }
+  if((glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS))
+  {
+    panUp->execute(dt); 
+  }
+  if((glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS))
+  {
+    panLeft->execute(dt); 
+  }
 }

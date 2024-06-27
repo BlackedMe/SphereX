@@ -3,7 +3,7 @@ deps/glfw/include
 -I
 deps/glad/include
 -I
-deps/glm
+deps
 -I
 include
 -I

@@ -2,8 +2,6 @@
 #include "helpers/shader.hpp"
 #include <iostream>
 
-namespace ProjectName{
-
 GLuint Shader::compileShader(GLenum type, const char* src)
 {
   const char* shaderSrc = parseFromFile(src);
@@ -22,5 +20,4 @@ GLuint Shader::compileShader(GLenum type, const char* src)
     std::cout << infoLog << '\n';
   }
   return shaderObj;
-}
 }

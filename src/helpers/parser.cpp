@@ -2,8 +2,6 @@
 #include <string>
 #include <fstream>
 
-namespace ProjectName{
-
 std::string *parseFromFile(const char* path, bool flag)
 {
   std::string *res = new std::string;
@@ -21,5 +19,4 @@ const char* parseFromFile(const char* path)
 {
   std::string *s = parseFromFile(path, 1);
   return s->c_str();
-}
 }

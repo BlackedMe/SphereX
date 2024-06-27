@@ -1,8 +1,5 @@
 #pragma once
 #include "glad/glad.h"
-#include "helpers/definitions.hpp"
-
-namespace ProjectName{
 
 class Program{
 public:
@@ -13,4 +10,3 @@ public:
 private:
   GLuint program;
 };
-}

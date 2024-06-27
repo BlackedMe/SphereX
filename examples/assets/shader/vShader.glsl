@@ -2,9 +2,9 @@
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
+layout (location = 0) in vec2 pos;
 
 void main()
 {
-  vec2 gridPlane[4] = vec2[](vec2(-1, -1), vec2(1, -1), vec2(1, 1), vec2(-1, 1));
-  gl_Position = proj * view * model * vec4(gridPlane[gl_VertexID], 0, 1);
+  gl_Position = proj * view * model * vec4(pos, 0, 1);
 }

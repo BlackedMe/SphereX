@@ -1,10 +1,7 @@
 #pragma once
-#include "helpers/definitions.hpp"
 #include <cstdint>
 
 class GLFWwindow;
-
-namespace ProjectName{
 
 class GLFWHandler{
 public:
@@ -25,4 +22,3 @@ private:
 
   void initCallback();
 };
-}

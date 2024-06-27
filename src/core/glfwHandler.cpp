@@ -3,9 +3,6 @@
 #include "GLFW/glfw3.h"
 #include <iostream>
 
-
-namespace ProjectName{
-
 GLFWHandler::GLFWHandler(const uint32_t SCR_WIDTH, const uint32_t SCR_HEIGHT) : SCR_WIDTH(SCR_WIDTH), SCR_HEIGHT(SCR_HEIGHT), aspectRatio((float) SCR_WIDTH/SCR_HEIGHT) {};
 
 void GLFWHandler::init()
@@ -41,5 +38,4 @@ void GLFWHandler::initCallback()
 GLFWwindow *GLFWHandler::getWindow()
 {
   return window;
-}
 }

@@ -6,8 +6,6 @@
 #define NAME_MAX 16
 #define BUF_LEN sizeof(struct inotify_event)
 
-namespace ProjectName{
-
 void InotifyHandler::init(const char* src, uint32_t mask)
 {
   fd = inotify_init(); 
@@ -51,5 +49,4 @@ InotifyHandler::~InotifyHandler()
 {
   inotify_rm_watch(fd, wd);
   close(fd);
-}
 }

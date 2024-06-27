@@ -1,16 +1,18 @@
 #include "core/glfwHandler.hpp"
 #include "events/command.hpp"
 #include "events/inotify.hpp"
-#include "helpers/definitions.hpp"
 
-namespace ProjectName{
+class Camera;
 
 class InputHandler{
 public:
-  void init(Program &program, GLFWHandler &hwnd, const char* vShaderSrc, const char* fShaderSrc);
-  void processInput(GLFWwindow *window, InotifyHandler &inotifyhwnd);
+  void init(Program &program, GLFWHandler &hwnd, const char* vShaderSrc, const char* fShaderSrc, Camera *camera);
+  void processInput(float dt, GLFWwindow *window, InotifyHandler &inotifyhwnd);
 private:
-  Command* ctrl_R;
-  Command* esc;
+  Command* reload;
+  Command* terminate;
+  Command* panDown;
+  Command* panRight;
+  Command* panUp;
+  Command* panLeft;
 };
-}

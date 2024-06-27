@@ -2,15 +2,13 @@
 #include "helpers/shader.hpp"
 #include "GLFW/glfw3.h"
 
-namespace ProjectName{
-
 float Command::timer = 0.0f;
 
 //ReloadProgram
 
 ReloadProgram::ReloadProgram(Program &program, const char* vShaderSrc, const char* fShaderSrc, float aspectRatio) : program(program), vShaderSrc(vShaderSrc), fShaderSrc(fShaderSrc), aspectRatio(aspectRatio) {};
 
-void ReloadProgram::execute()
+void ReloadProgram::execute(float dt)
 {
   program.reload(vShaderSrc, fShaderSrc, aspectRatio);
 }
@@ -20,8 +18,7 @@ void ReloadProgram::execute()
 
 TerminateWindow::TerminateWindow(GLFWwindow *window) : window(window) {};
 
-void TerminateWindow::execute()
+void TerminateWindow::execute(float dt)
 {
   glfwDestroyWindow(window);
-}
 }

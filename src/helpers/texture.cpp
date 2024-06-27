@@ -3,8 +3,6 @@
 #include "vendor/stb_image.h"
 #include "glad/glad.h"
 
-namespace ProjectName{
-
 void Texture::init(GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth)
 {
   stbi_set_flip_vertically_on_load(1);
@@ -30,5 +28,4 @@ void Texture::load(int numTextures, const char **src)
   {
     glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, x, y, 1, GL_RGBA, GL_UNSIGNED_BYTE, &data[i][0]);
   }
-}
 }

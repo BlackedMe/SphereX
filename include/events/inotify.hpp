@@ -1,9 +1,6 @@
 #pragma once
-#include "helpers/definitions.hpp"
 #include <cstdint>
 
-
-namespace ProjectName{
 
 class InotifyHandler{
 public:
@@ -17,4 +14,3 @@ public:
 private:
   int fd, wd;
 };
-}

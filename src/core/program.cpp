@@ -5,9 +5,6 @@
 #include "glm/ext/matrix_clip_space.hpp"
 #include <iostream>
 
-
-namespace ProjectName{
-
 void Program::init(const char* vShaderSrc, const char* fShaderSrc, float aspectRatio)
 {
   GLuint vShader = Shader::compileShader(GL_VERTEX_SHADER, vShaderSrc);
@@ -59,5 +56,4 @@ void Program::use()
 GLuint *Program::get()
 {
   return &program;
-}
 }
