@@ -33,5 +33,5 @@ void PanLeft::execute(float dt)
 
 void ZoomOut::execute(float dt)
 {
-  camera
+  // camera
 }

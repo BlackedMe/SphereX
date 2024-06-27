@@ -6,6 +6,8 @@
 #include "core/update.hpp"
 #include "events/inotify.hpp"
 #include "objects/camera.hpp"
+#include "rendering/batchRenderer.hpp"
+#include "helpers/texture.hpp"
 
 class Demo : public Application{
 public:
@@ -21,6 +23,8 @@ private:
   Renderer renderer; 
   InotifyHandler inotifyHwnd;
   Camera camera;
+  BatchRenderer batchRenderer;
+  Texture texture;
 
-  GLuint vao;
+  // GLuint vao;
 };

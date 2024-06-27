@@ -1,6 +1,7 @@
 #include "demo.hpp"
 #include "core/glfwHandler.hpp"
 #include "helpers/uniform.hpp"
+#include "geometry/quad.hpp"
 #include <sys/inotify.h>
 
 Demo::Demo(const uint32_t SCR_WIDTH, const uint32_t SCR_HEIGHT) : glfwHwnd(SCR_WIDTH, SCR_HEIGHT) {};
@@ -16,33 +17,14 @@ void Demo::init(){
 
   inotifyHwnd.init("../examples/assets/shader", IN_MODIFY);
   
-  
-  float vertices[] = {
-    -0.5, -0.5,
-     0.5, -0.5,
-     0.5,  0.5,
-    -0.5,  0.5,
-  };
+  const char *src[1];
+  src[0] = "../examples/sprites/Sprite-0001.png";
+  texture.init(GL_RGBA8, 320, 320, 32);
+  texture.load(1, src);
 
-  unsigned int indices[6] = {
-    0, 1, 2,
-    2, 3, 0
-  };
-
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
-
-  GLuint vbo, ebo;
-  glGenBuffers(1, &vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &ebo);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices[0], GL_STATIC_DRAW);
-
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+  batchRenderer.init();  
+  addQuad(batchRenderer, glm::vec2(0), 0.5, 0);
+  addQuad(batchRenderer, glm::vec2(0.5, 0.5), 0.5, 0);
 }
 
 void Demo::run(){
@@ -63,8 +45,9 @@ void Demo::run(){
     glUseProgram(*program.get());
 
     uniformMatrix4fv(*program.get(), "view", 1, GL_FALSE, &camera.getView()[0][0]);
-    glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    // glBindVertexArray(vao);
+    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    batchRenderer.render(*program.get());
     renderer.render(glfwHwnd);    
   }
   glfwTerminate();
