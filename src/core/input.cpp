@@ -1,14 +1,13 @@
 #include "core/glfwHandler.hpp"
 #include "core/input.hpp"
 #include "events/inotify.hpp"
-#include "objects/cameraController.hpp"
+#include "scene/cameraController.hpp"
 #include "GLFW/glfw3.h"
 
 class Camera;
 
-void InputHandler::init(Program &program, GLFWHandler &hwnd, const char* vShaderSrc, const char* fShaderSrc, Camera *camera)
+void InputHandler::init(GLFWHandler &hwnd, Camera *camera)
 {
-  reload = new ReloadProgram(program, vShaderSrc, fShaderSrc, hwnd.aspectRatio); 
   terminate = new TerminateWindow(hwnd.getWindow());
   panDown = new PanDown(camera);
   panRight = new PanRight(camera);
@@ -17,15 +16,11 @@ void InputHandler::init(Program &program, GLFWHandler &hwnd, const char* vShader
 }
 
 
-void InputHandler::processInput(float dt, GLFWwindow *window, InotifyHandler &inotifyHwnd)
+void InputHandler::processInput(float dt, GLFWwindow *window) 
 {
   glfwPollEvents();
 
-  if(inotifyHwnd.isTriggered())
-  {
-    reload->execute(dt);
-  }
-  else if((glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && Command::timer <= 0.0f))
+  if((glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && Command::timer <= 0.0f))
   {
     terminate->execute(dt); 
   }

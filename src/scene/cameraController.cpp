@@ -1,5 +1,5 @@
-#include "objects/cameraController.hpp"
-#include"objects/camera.hpp"
+#include "scene/cameraController.hpp"
+#include"scene/camera.hpp"
 
 class Camera;
 

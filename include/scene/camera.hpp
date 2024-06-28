@@ -1,9 +1,13 @@
+#pragma once
 #include "glm/ext/matrix_float4x4.hpp"
+#include "glad/glad.h"
 class Camera{
 public:
+  void update(GLuint program);
+
   void translate(const glm::vec2 &offset); 
 
-  float movingSpeed = 0.5f;
+  float movingSpeed = 1.0f;
 
   const glm::mat4 &getView();
 private:
