@@ -1,6 +1,7 @@
 #include "demo.hpp"
 #include "GLFW/glfw3.h"
 #include "core/glfwHandler.hpp"
+#include "core/editorLayout.hpp"
 #include "helpers/uniform.hpp"
 #include <sys/inotify.h>
 
@@ -8,8 +9,15 @@ Demo::Demo(const uint32_t SCR_WIDTH, const uint32_t SCR_HEIGHT) : glfwHwnd(SCR_W
 
 void Demo::init(){
   glfwHwnd.init();
+  
+  frameBuffer.init(0, 0);
 
-  world->init();
+  imGuiHandler.init(glfwHwnd.getWindow());
+
+  world->init(glfwHwnd.aspectRatio);
+
+  glfwHwnd.initCallBack(world->getCamera());
+
   world->loadShader("../examples/assets/shader/vShader.glsl", "../examples/assets/shader/fShader.glsl", glfwHwnd.aspectRatio);
 
   inputHwnd.init(glfwHwnd, world->getCamera());
@@ -31,21 +39,32 @@ void Demo::run(){
     dt = currentTime - lastFrame;
     lastFrame = currentTime; 
 
-    inputHwnd.processInput(dt, glfwHwnd.getWindow());
+    imGuiHandler.startNewFrame();
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);  
+    inputHwnd.processInput(dt, glfwHwnd.getWindow());
 
     world->update(dt);
 
+    frameBuffer.bind();
+
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);  
+
     world->render(glfwHwnd.getWindow());
+
+    frameBuffer.unbind();
+    editor.render(frameBuffer, *world);
+    imGuiHandler.render();
+
+    glfwSwapBuffers(glfwHwnd.getWindow());
   }
   glfwTerminate();
+  imGuiHandler.terminate();
 }
 
 int main()
 {
-  Demo demo(200, 200);
+  Demo demo(800,400);
   demo.init();
   demo.run();
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include "core/glfwHandler.hpp"
 #include "rendering/batchRenderer.hpp"
 #include "scene/gameObject.hpp"
@@ -6,7 +7,7 @@
 #include <vector>
 class World{
 public:
-  void init();
+  void init(float aspectRatio);
 
   void loadShader(const char* vShaderSrc, const char* fShaderSrc, float aspectRatio);
 
@@ -15,6 +16,10 @@ public:
   void render(GLFWwindow *window);
 
   void addGameObject(const glm::vec3 &pos);
+
+  void modifyGameObject(int index);
+
+  std::vector<GameObject> &getGameObjects();
 
   Camera *getCamera();
 private:

@@ -1,13 +1,24 @@
 #pragma once
+#include "helpers/framebuffer.hpp"
 #include <cstdint>
 
+
+
+class Camera;
 class GLFWwindow;
+
+struct CallBackParams{
+  Camera *camera;
+};
 
 class GLFWHandler{
 public:
   GLFWHandler(const uint32_t SCR_WIDTH, const uint32_t SCR_HEIGHT);
   //initalizes glfw
   void init();
+
+  //initalizes callbacks
+  void initCallBack(Camera *camera);
 
   //returns window
   GLFWwindow *getWindow(); 
@@ -20,5 +31,7 @@ public:
 private:
   GLFWwindow *window; 
 
-  void initCallback();
+  FrameBuffer *frameBuffer;
+
+  void frameBufferSizeCallBack(GLFWwindow *window, int w, int h);
 };

@@ -29,7 +29,7 @@ void BatchRenderer::init()
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices[0], GL_STATIC_DRAW);
 
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), 0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), 0);
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), (void *) offsetof(QuadVertex, texCoord));
@@ -43,24 +43,22 @@ void BatchRenderer::render(GLuint program, GLFWwindow *window)
   glBindVertexArray(vao); 
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(QuadVertex) * lastIndex, &quads[0]);
-  glDrawElements(GL_TRIANGLES, (lastIndex/4) * 6, GL_UNSIGNED_INT, 0); 
-  glfwSwapBuffers(window);
-}
 
-void BatchRenderer::addQuad(const glm::vec2 &pos, float sideLength, float texIndex)
-{
-  sideLength /= 2;
-  QuadVertex quadVertex[4];
-  quadVertex[0] = {glm::vec2(pos.x - sideLength, pos.y - sideLength), glm::vec2(0, 0), texIndex};
-  quadVertex[1] = {glm::vec2(pos.x + sideLength, pos.y - sideLength), glm::vec2(1, 0), texIndex};
-  quadVertex[2] = {glm::vec2(pos.x + sideLength, pos.y + sideLength), glm::vec2(1, 1), texIndex};
-  quadVertex[3] = {glm::vec2(pos.x - sideLength, pos.y + sideLength), glm::vec2(0, 1), texIndex};
-
-  for(int i = 0; i < 4; i++)
+  for(int i = 0; i < quad.size(); i++)
   {
-    quads[lastIndex + i] = quadVertex[i];
+    glBufferSubData(GL_ARRAY_BUFFER, i * sizeof(QuadVertex) * 4, sizeof(QuadVertex) * 4, &quad[i].quadVertex);
   }
-  lastIndex += 4;
+  glDrawElements(GL_TRIANGLES, quad.size() * 6, GL_UNSIGNED_INT, 0); 
 }
 
+void BatchRenderer::addQuad(const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale, float sideLength, float texIndex)
+{
+  quad.push_back(Quad(pos, rotation, scale, sideLength, texIndex));
+}
+
+void BatchRenderer::modifyQuad(int index, const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale)
+{
+  Quad newQuad(pos, rotation, scale, quad[index].sideLength, quad[index].quadVertex[0].texIndex);
+
+  quad[index] = newQuad;
+}

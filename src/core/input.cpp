@@ -1,6 +1,5 @@
 #include "core/glfwHandler.hpp"
 #include "core/input.hpp"
-#include "events/inotify.hpp"
 #include "scene/cameraController.hpp"
 #include "GLFW/glfw3.h"
 

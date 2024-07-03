@@ -1,4 +1,5 @@
 #include "core/glfwHandler.hpp"
+#include "scene/camera.hpp"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include <iostream>
@@ -27,12 +28,17 @@ void GLFWHandler::init()
 
   glfwMakeContextCurrent(window);
   if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) std::cout << "Failed to initalize glad!";
-  initCallback();
 }
 
-void GLFWHandler::initCallback()
+void GLFWHandler::initCallBack(Camera *camera)
 {
-  glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int w, int h) { glViewport(0, 0, w, h);});
+  CallBackParams *callBackParams = new CallBackParams;
+  callBackParams->camera = camera;
+  glfwSetWindowUserPointer(window, callBackParams);
+  glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int w, int h) {
+    glViewport(0, 0, w, h);
+    ((CallBackParams *) glfwGetWindowUserPointer(window))->camera->updateOrtho((float) w/h);
+  });
 }
 
 GLFWwindow *GLFWHandler::getWindow()

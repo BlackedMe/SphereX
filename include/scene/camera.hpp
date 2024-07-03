@@ -3,6 +3,8 @@
 #include "glad/glad.h"
 class Camera{
 public:
+  void updateOrtho(float aspectRatio);
+
   void update(GLuint program);
 
   void translate(const glm::vec2 &offset); 
@@ -12,4 +14,6 @@ public:
   const glm::mat4 &getView();
 private:
   glm::mat4 view = glm::mat4(1.0f);
+
+  glm::mat4 proj = glm::mat4(1.0f);
 };
