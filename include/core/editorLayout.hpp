@@ -1,9 +1,14 @@
 #pragma once
 #include "helpers/framebuffer.hpp"
+#include "fileSystem/fileSystem.hpp"
 #include "scene/world.hpp"
 class Editor{
 public:
-  static void render(FrameBuffer &frameBuffer, World &world);
+  void render(FrameBuffer &frameBuffer, World &world);
+
+  FileSystem fileSystem;
 private:
-  static int selectedGameObject;
+  int selectedGameObject = -1;
+
+  GLuint texture;
 };

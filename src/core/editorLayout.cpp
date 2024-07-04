@@ -1,7 +1,8 @@
+#include "helpers/texture.hpp"
 #include "core/editorLayout.hpp"
 #include "imgui/imgui.h"
-
-int Editor::selectedGameObject = -1;
+#include "vendor/stb_image.h"
+#include <sys/select.h>
 
 void Editor::render(FrameBuffer &frameBuffer, World &world)
 {
@@ -27,8 +28,11 @@ void Editor::render(FrameBuffer &frameBuffer, World &world)
       ImGui::PushID(i);
       if(ImGui::TreeNode(gameObjects[i].getName().c_str()))
       {
-        selectedGameObject = i;
         ImGui::TreePop();
+      }
+      if(ImGui::IsItemClicked())
+      {
+        selectedGameObject = i;
       }
       ImGui::PopID();
     }
@@ -69,7 +73,27 @@ void Editor::render(FrameBuffer &frameBuffer, World &world)
   }
   ImGui::End();
 
+
   ImGui::Begin("Assets");
+  {
+    // // glGenerateMipmap(GL_TEXTURE_2D);
+
+    // ImVec2 size(32.0f, 32.0f);
+    // if(ImGui::ImageButton((void *) (intptr_t) texture, size, ImVec2(0, 1.0), ImVec2(0.1, 0.9)))
+    // {
+    //   std::cout << "hi" << '\n';
+    // }
+    //
+
+  //   for(File &file : fileSystem.files)
+  //   {
+  //     glm::vec2 uv0, uv1;
+
+  //     Texture::extractSubregion()
+  //     ImGui::ImageButton()
+  //   }
+  // }
   ImGui::End();
+  }
 
 }
