@@ -6,5 +6,5 @@ class Editor{
 public:
   void render(FrameBuffer &frameBuffer, TextureHandler &textureHandler, World &world);
 private:
-  int selectedGameObject;
+  int selectedGameObject = -1;
 };
