@@ -1,9 +1,9 @@
 #include "core/editorLayout.hpp"
+#include "helpers/textureHandler.hpp"
 #include "imgui/imgui.h"
+#include "vendor/stb_image.h"
 
-int Editor::selectedGameObject = -1;
-
-void Editor::render(FrameBuffer &frameBuffer, World &world)
+void Editor::render(FrameBuffer &frameBuffer, TextureHandler &textureHandler, World &world)
 {
   std::vector<GameObject> &gameObjects = world.getGameObjects();
   ImGui::Begin("viewport");
@@ -39,24 +39,41 @@ void Editor::render(FrameBuffer &frameBuffer, World &world)
   {
     if(selectedGameObject != -1)
     {
+      GameObject &gameObject = gameObjects[selectedGameObject];
       if(ImGui::CollapsingHeader("Transform"))
       {
         bool modified = false;
 
-        glm::vec3 position = gameObjects[selectedGameObject].transform.pos;
+        glm::vec3 position = gameObject.transform.pos;
 
-        if(ImGui::DragFloat3("Position", (float *) &gameObjects[selectedGameObject].transform.pos))
+        if(ImGui::DragFloat3("Position", (float *) &gameObject.transform.pos))
         {
           modified = true;
         }
 
-        if(ImGui::DragFloat3("Rotation", (float *) &gameObjects[selectedGameObject].transform.rotation))
+        if(ImGui::DragFloat3("Rotation", (float *) &gameObject.transform.rotation))
         {
           modified = true;
         }
 
-        if(ImGui::DragFloat3("Scale", (float *) &gameObjects[selectedGameObject].transform.scale))
+        if(ImGui::DragFloat3("Scale", (float *) &gameObject.transform.scale))
         {
+          modified = true;
+        }
+
+        if(modified)
+        {
+          world.modifyGameObject(selectedGameObject);
+        }
+      }
+
+      if(ImGui::CollapsingHeader("SpriteRenderer"))
+      {
+        bool modified = false;
+
+        if(ImGui::InputInt("Texture", &gameObject.textureID))
+        {
+          gameObject.texture = textureHandler.textures[gameObject.textureID];
           modified = true;
         }
 
@@ -69,7 +86,17 @@ void Editor::render(FrameBuffer &frameBuffer, World &world)
   }
   ImGui::End();
 
+
   ImGui::Begin("Assets");
+  {
+    // glGenerateMipmap(GL_TEXTURE_2D);
+
+    // ImVec2 size(32.0f, 32.0f);
+    // if(ImGui::ImageButton((void *) (intptr_t) texture, size, ImVec2(0, 1.0), ImVec2(0.1, 0.9)))
+    // {
+    //   std::cout << "hi" << '\n';
+    // }
+  }
   ImGui::End();
 
 }

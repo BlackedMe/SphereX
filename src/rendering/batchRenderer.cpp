@@ -51,14 +51,14 @@ void BatchRenderer::render(GLuint program, GLFWwindow *window)
   glDrawElements(GL_TRIANGLES, quad.size() * 6, GL_UNSIGNED_INT, 0); 
 }
 
-void BatchRenderer::addQuad(const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale, float sideLength, float texIndex)
+void BatchRenderer::addQuad(Transform &transform, Texture &texture, float sideLength)
 {
-  quad.push_back(Quad(pos, rotation, scale, sideLength, texIndex));
+  quad.push_back(Quad(transform, texture, sideLength));
 }
 
-void BatchRenderer::modifyQuad(int index, const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale)
+void BatchRenderer::modifyQuad(int index, Transform &transform, Texture &texture)
 {
-  Quad newQuad(pos, rotation, scale, quad[index].sideLength, quad[index].quadVertex[0].texIndex);
+  Quad newQuad(transform, texture, quad[index].sideLength);
 
   quad[index] = newQuad;
 }

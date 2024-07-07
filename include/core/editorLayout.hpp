@@ -1,9 +1,10 @@
 #pragma once
 #include "helpers/framebuffer.hpp"
+#include "helpers/textureHandler.hpp"
 #include "scene/world.hpp"
 class Editor{
 public:
-  static void render(FrameBuffer &frameBuffer, World &world);
+  void render(FrameBuffer &frameBuffer, TextureHandler &textureHandler, World &world);
 private:
-  static int selectedGameObject;
+  int selectedGameObject;
 };

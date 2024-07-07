@@ -28,12 +28,15 @@ void World::addGameObject(const glm::vec3 &pos)
 {
   std::string name = "GameObject " +  std::to_string(gameObjects.size());
   gameObjects.push_back(GameObject(pos, name));
-  batchRenderer.addQuad(gameObjects.back().transform.pos, gameObjects.back().transform.rotation, gameObjects.back().transform.scale);
+
+  GameObject &gameObject = gameObjects.back();
+  batchRenderer.addQuad(gameObject.transform, gameObject.texture);
 }
 
 void World::modifyGameObject(int index)
 {
-  batchRenderer.modifyQuad(index, gameObjects[index].transform.pos, gameObjects[index].transform.rotation, gameObjects[index].transform.scale);
+  GameObject &gameObject = gameObjects[index];
+  batchRenderer.modifyQuad(index, gameObject.transform, gameObject.texture);
 }
 
 std::vector<GameObject> &World::getGameObjects()

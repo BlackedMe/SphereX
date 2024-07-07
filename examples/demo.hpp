@@ -4,8 +4,8 @@
 #include "core/input.hpp"
 #include "core/update.hpp"
 #include "core/editorLayout.hpp"
+#include "helpers/textureHandler.hpp"
 #include "scene/world.hpp"
-#include "helpers/texture.hpp"
 #include "helpers/framebuffer.hpp"
 
 class Demo : public Application{
@@ -18,9 +18,8 @@ private:
   GLFWHandler glfwHwnd; 
   InputHandler inputHwnd; 
   ImGuiHandler imGuiHandler;
+  TextureHandler textureHandler;
   Editor editor;
-  Texture texture;
   FrameBuffer frameBuffer;
   World *world = new World;
-  // GLuint vao;
 };

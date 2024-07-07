@@ -1,8 +1,10 @@
 #include "geometry/quadVertex.hpp"
-#include "glm/ext/vector_float3.hpp"
+#include "geometry/transform.hpp"
+#include "rendering/texture.hpp"
+
 struct Quad{
-  Quad(float sideLength, float texIndex);
-  Quad(const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale, float sideLength, float texIndex);
+  Quad(Texture &texture, float sideLength);
+  Quad(Transform &transform, Texture &texture, float sideLength);
 
   QuadVertex quadVertex[4];
   float sideLength;

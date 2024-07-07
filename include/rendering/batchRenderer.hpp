@@ -2,7 +2,7 @@
 #include "core/glfwHandler.hpp"
 #include "geometry/quad.hpp"
 #include "glad/glad.h"
-#include "glm/ext/vector_float3.hpp"
+#include "geometry/transform.hpp"
 #define maxNumQuad 1024
 class BatchRenderer{
 public:
@@ -10,9 +10,9 @@ public:
 
   void render(GLuint program, GLFWwindow *window);
 
-  void addQuad(const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale, float sideLength = 0.5f, float texIndex = 0);
+  void addQuad(Transform &transform, Texture &texture, float sideLength = 0.5f);
 
-  void modifyQuad(int index, const glm::vec3 &pos, const glm::vec3 &rotation, const glm::vec3 &scale);
+  void modifyQuad(int index, Transform &transform, Texture &texture);
 private:
   std::vector<Quad> quad;
 

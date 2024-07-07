@@ -3,6 +3,8 @@
 #include "core/glfwHandler.hpp"
 #include "core/editorLayout.hpp"
 #include "helpers/uniform.hpp"
+#include "helpers/textureHandler.hpp"
+#include "rendering/textureAtlas.hpp"
 #include <sys/inotify.h>
 
 Demo::Demo(const uint32_t SCR_WIDTH, const uint32_t SCR_HEIGHT) : glfwHwnd(SCR_WIDTH, SCR_HEIGHT) {};
@@ -22,10 +24,12 @@ void Demo::init(){
 
   inputHwnd.init(glfwHwnd, world->getCamera());
 
-  const char *src[1];
-  src[0] = "../examples/sprites/Sprite-0001.png";
-  texture.init(GL_RGBA8, 320, 320, 32);
-  texture.load(1, src);
+  textureHandler.init(GL_RGBA8, 320, 320, 32);
+
+  TextureAtlas textureAtlas(glm::ivec2(32, 32));
+  textureAtlas.loadData("../examples/sprites/icons.png");
+
+  textureHandler.load(1, &textureAtlas);
 
   world->addGameObject(glm::vec3(0.0f));
   world->addGameObject(glm::vec3(1.0f, 0.0f, 0.0f));
@@ -53,7 +57,7 @@ void Demo::run(){
     world->render(glfwHwnd.getWindow());
 
     frameBuffer.unbind();
-    editor.render(frameBuffer, *world);
+    editor.render(frameBuffer, textureHandler, *world);
     imGuiHandler.render();
 
     glfwSwapBuffers(glfwHwnd.getWindow());

@@ -22,8 +22,9 @@ public:
   std::vector<GameObject> &getGameObjects();
 
   Camera *getCamera();
-private:
+
   std::vector<GameObject> gameObjects;
+private:
   BatchRenderer batchRenderer;
   Camera camera;
   Program program;
