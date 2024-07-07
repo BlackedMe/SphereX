@@ -27,8 +27,11 @@ void Editor::render(FrameBuffer &frameBuffer, TextureHandler &textureHandler, Wo
       ImGui::PushID(i);
       if(ImGui::TreeNode(gameObjects[i].getName().c_str()))
       {
-        selectedGameObject = i;
         ImGui::TreePop();
+      }
+      if(ImGui::IsItemClicked())
+      {
+        selectedGameObject = i;
       }
       ImGui::PopID();
     }
@@ -86,17 +89,9 @@ void Editor::render(FrameBuffer &frameBuffer, TextureHandler &textureHandler, Wo
   }
   ImGui::End();
 
-
   ImGui::Begin("Assets");
   {
-    // glGenerateMipmap(GL_TEXTURE_2D);
 
-    // ImVec2 size(32.0f, 32.0f);
-    // if(ImGui::ImageButton((void *) (intptr_t) texture, size, ImVec2(0, 1.0), ImVec2(0.1, 0.9)))
-    // {
-    //   std::cout << "hi" << '\n';
-    // }
   }
   ImGui::End();
-
 }
